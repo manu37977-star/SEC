@@ -1,49 +1,57 @@
 {
-  "class_uid": 3002,
-  "class_name": "Authentication",
+  "class_uid": 5001,
+  "class_name": "Device Inventory Info",
   
   "category_uid": "Integer: Required: Numeric category UID as defined by OCSF.",
-  "is_mfa": "Boolean: Required: True if MFA is enabled, False if disabled.",
-  "user": {
-    "name": "String: Required: Unique identifier or username of the account associated with the authentication event.",
-    "uid": "String: Required: Unique identifier of the user in the source system."
-  },
-  "src_endpoint": "String: Optional: Name of the device this data came from e.g. Laptop, Mobile, Server. Write the name directly, not a variable.",
-  "org": {
-    "name": "String: Required: Name of the organization or tenant associated with the user account.",
-    "uid": "String: Optional: Unique identifier of the organization."
+  "device": {
+    "hostname": "String: Required: Primary hostname of the endpoint.",
+    "uid": "String: Recommended: The unique identifier of the device. For example the Windows TargetSID or AWS EC2 ARN.",
+    "name": "String: Optional: The alternate device name ordinarily as assigned by an administrator.",
+    "ip": "String: Recommended: Primary IP address of the endpoint.",
+    "type": "String: Optional: Endpoint platform or form factor e.g. Workstation, Laptop, Server, Mobile, VM.",
+    "os": {
+      "name": "String: Optional: Operating system name e.g. Windows, Linux, macOS.",
+      "version": "String: Optional: Operating system version or build e.g. 11.0.22631, 22.04."
+    },
+    "owner": "user.json",
+    "org": {
+      "name": "String: Optional: Name of the organization or tenant the endpoint belongs to."
+    },
+    "agent_list": "Array: Optional: A list of agent objects associated with a device endpoint or resource.",
+    "interface_name": "String: Recommended: The name of the network interface e.g. eth1.",
+    "interface_uid": "String: Recommended: The unique identifier of the network interface.",
+    "os_machine_uuid": "String: Optional: UUID of operating system assigned Machine ID.",
+    "is_managed": "Boolean: Optional: Indicates whether the endpoint is managed by corporate tooling. True = managed, False = unmanaged.",
+    "created_time": "String: Optional: Time when the endpoint record was created in ISO 8601 format.",
+    "last_seen_time": "String: Optional: Last time the endpoint checked in or reported telemetry in ISO 8601 format."
   },
 
-  "message": "String: Optional: Additional contextual or debug information related to the authentication event.",
-  "actor": {
-    "user": {
-      "type": "String: Optional: If known, explicitly specify the user role or privilege level e.g. Admin, User, Viewer. This must be a fixed value, not a variable."
-    }
+  "security": {
+    "disk_encryption": "Boolean: Recommended: Indicates whether full disk encryption is enabled e.g. FileVault on macOS, BitLocker on Windows, LUKS on Linux.",
+    "security_update": "String: Recommended: Identifier of the latest OS security update or patch level applied to this endpoint e.g. OS build number or last installed KB/patch ID.",
+    "security_update_history_time": "String: Optional: Timestamp of the most recent security update in ISO 8601 format.",
+    "patch_update": "String: Recommended: Current OS patch compliance status e.g. Up to date, Outdated, Critical missing, Unknown.",
+    "password_policy": "Boolean: Recommended: Indicates whether the endpoint complies with the organisation password policy."
   },
-  "logon_type_id": "Integer: Optional: Numeric identifier representing the type of logon e.g. interactive, remote, service, batch.(0:Unknown, 1: System, 2: Interactive, 3: Network, 4: Batch, 5: OS Service, 7: Unlock, 8:Network Cleartext, 9: New Credentials, 10: Remote Interactive, 11: Cached Interactive, 12: Cached Remote Interactive, 13: Cached Unlock, 99: Other)",
-  "activity_id": "Integer: Optional: Identifier representing the specific authentication-related activity or event type.(0: Unknown, 1: Logon, 2: Logoff, 3: Authentication Ticket, 4: Service Ticket Request, 5: Service Ticket Renew, 6: Preauthorisations, 7:Account Switch, 99:Other)",
-  "status": "String: Optional: Human-readable description indicating the outcome of the authentication attempt e.g. Success, Failure.",
-  "status_id": "Integer: Optional: Normalized numeric identifier representing the authentication status. 0 Unknown, 1 Success, 2 Failure, 99 Other.",
-  "status_detail": "String: Optional: Additional explanation or context describing the meaning of the status_id value.",
-  "confidence_id": "Integer: Optional: Confidence score 0-100 indicating the likelihood that the finding or event is accurate and valid.",
-  "category_name": "String: Optional: Human-readable name of the category corresponding to category_uid.",
-  "start_time": "String: Optional: Time when the authentication event or session started in ISO 8601 format.",
-  "severity_id": "Integer: Optional: Numeric severity level indicating the risk associated with the authentication event.",
-  "status_code": "String: Optional: System-generated code representing error or response status useful for troubleshooting.",
-  "last_seen_time": "String: Optional: Last recorded session time of the user in ISO 8601 format.",
+
+  "status": "String: Optional: Current operational status of the endpoint e.g. Online, Offline, Retired.",
+  "status_id": "Integer: Optional: Normalized numeric status code for the endpoint.",
+  "status_detail": "String: Optional: Additional context describing the current status or reason for non-compliance.",
 
   "metadata": {
     "version": "String: Required: OCSF schema version e.g. 1.0.0.",
-    "uid": "String: Optional: Original event UID in the source system. If no relevant ID exists keep blank.",
-    "platform": "String: Required: Name of the platform this data came from e.g. GitHub, Shuffle, Okta. Write the name directly, not a variable.",
-    "logged_time": "String: Optional: Time the event was logged in ISO 8601 format.",
+    "uid": "String: Optional: Original record UID in the source system. If no relevant ID exists keep blank.",
+    "logged_time": "String: Optional: Time this record was collected in ISO 8601 format.",
+    "Source": {
+      "name": "String: Required: Name of the platform this data came from e.g. Github,Jamf, Intune, CrowdStrike. Write the name directly, not a variable.",
+      "device_managed": "Boolean: Optional: Indicates whether the endpoint is managed by corporate tooling (true = managed, false = unmanaged).",
+    },
     "extensions": {
       "custom_attributes": {
         "comments": "Array: Optional: Array of objects with fields author, timestamp, text representing analyst comments.",
         "tlp": "Integer: Optional: Traffic Light Protocol classification. Default: 2.",
-        "is_new_logon": "Boolean: Optional: Indicates logon is from a device not seen before or a first time account logon.",
-        "custom_fields": "Object: Optional: Arbitrary key-value pairs for vendor-specific or workflow-specific fields.",
-        "assignee": "String: Optional: Email or identifier of the analyst or system responsible for this event."
+        "custom_fields": "Object: Optional: Arbitrary key-value pairs for platform-specific or workflow-specific fields.",
+        "assignee": "String: Optional: Email or identifier of the analyst responsible for reviewing this endpoint."
       }
     }
   }
