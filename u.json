@@ -11,7 +11,8 @@
     "type": "String: Optional: Endpoint platform or form factor e.g. Workstation, Laptop, Server, Mobile, VM.",
     "os": {
       "name": "String: Optional: Operating system name e.g. Windows, Linux, macOS.",
-      "version": "String: Optional: Operating system version or build e.g. 11.0.22631, 22.04."
+      "version": "String: Optional: Operating system version or build e.g. 11.0.22631, 22.04.",
+      "latest_version": "String: Optional: Current latest version the current operating system realesed Need to be updated stauts as per defined OS."
     },
     "owner": "user.json",
     "org": {
@@ -35,7 +36,7 @@
   },
 
   "status": "String: Optional: Current operational status of the endpoint e.g. Online, Offline, Retired.",
-  "status_id": "Integer: Optional: Normalized numeric status code for the endpoint.",
+  "status_id": "Integer: Optional: Normalized numeric status code for the endpoint.(0: Unknown, 1: Success, 2: Failure, 99: Other)",
   "status_detail": "String: Optional: Additional context describing the current status or reason for non-compliance.",
 
   "metadata": {
