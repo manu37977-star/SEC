@@ -8,7 +8,7 @@
     "name": "String: Required: Unique identifier or username of the account associated with the authentication event.",
     "uid": "String: Required: Unique identifier of the user in the source system."
   },
-  "src_endpoint": "String: Required: Name of the platform this data came from e.g. GitHub, Shuffle, Okta. Write the name directly, not a variable.",
+  "src_endpoint": "String: Optional: Name of the device this data came from e.g. Laptop, Mobile, Server. Write the name directly, not a variable.",
   "org": {
     "name": "String: Required: Name of the organization or tenant associated with the user account.",
     "uid": "String: Optional: Unique identifier of the organization."
@@ -35,6 +35,7 @@
   "metadata": {
     "version": "String: Required: OCSF schema version e.g. 1.0.0.",
     "uid": "String: Optional: Original event UID in the source system. If no relevant ID exists keep blank.",
+    "platform": "String: Required: Name of the platform this data came from e.g. GitHub, Shuffle, Okta. Write the name directly, not a variable.",
     "logged_time": "String: Optional: Time the event was logged in ISO 8601 format.",
     "extensions": {
       "custom_attributes": {
