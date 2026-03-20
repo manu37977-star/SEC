@@ -1,30 +1,35 @@
 {
   "class_uid": 5001,
   "class_name": "Device Inventory Info",
-  
-  "category_uid": "Integer: Required: Numeric category UID as defined by OCSF.",
+  "category_uid": "Integer: Required: Category UID. 5 = Discovery.",
+  "activity_id": "Integer: Required: Activity identifier. 1 = Log, 2 = Collect, 99 = Other.",
+  "type_uid": "Integer: Required: Event type ID. 500101 = Log, 500102 = Collect, 500199 = Other.",
+  "severity_id": "Integer: Required: Severity level. 1 = Informational, 2 = Low, 3 = Medium, 4 = High, 5 = Critical.",
+  "time": "Timestamp: Required: Time this inventory event occurred in ISO 8601 format.",
+  "message": "String: Recommended: Description of this device inventory event as defined by the source.",
+
   "device": {
     "hostname": "String: Required: Primary hostname of the endpoint.",
-    "uid": "String: Recommended: The unique identifier of the device. For example the Windows TargetSID or AWS EC2 ARN.",
-    "name": "String: Optional: The alternate device name ordinarily as assigned by an administrator.",
+    "uid": "String: Recommended: Unique identifier assigned to the device by the source system e.g. Windows SID, AWS EC2 ARN, Jamf serial number.",
+    "name": "String: Optional: Alternate device name ordinarily as assigned by an administrator.",
     "ip": "String: Recommended: Primary IP address of the endpoint.",
     "type": "String: Optional: Endpoint platform or form factor e.g. Workstation, Laptop, Server, Mobile, VM.",
     "os": {
       "name": "String: Optional: Operating system name e.g. Windows, Linux, macOS.",
       "version": "String: Optional: Operating system version or build e.g. 11.0.22631, 22.04.",
-      "latest_version": "String: Optional: Current latest version the current operating system realesed Need to be updated stauts as per defined OS."
+      "latest_version": "String: Optional: Latest available version of the operating system. Used to determine if device is up to date."
     },
     "owner": "user.json",
     "org": {
       "name": "String: Optional: Name of the organization or tenant the endpoint belongs to."
     },
     "agent_list": "Array: Optional: A list of agent objects associated with a device endpoint or resource.",
-    "interface_name": "String: Recommended: The name of the network interface e.g. eth1.",
-    "interface_uid": "String: Recommended: The unique identifier of the network interface.",
+    "interface_name": "String: Recommended: Name of the network interface e.g. eth1.",
+    "interface_uid": "String: Recommended: Unique identifier of the network interface.",
     "os_machine_uuid": "String: Optional: UUID of operating system assigned Machine ID.",
     "is_managed": "Boolean: Optional: Indicates whether the endpoint is managed by corporate tooling. True = managed, False = unmanaged.",
-    "created_time": "String: Optional: Time when the endpoint record was created in ISO 8601 format.",
-    "last_seen_time": "String: Optional: Last time the endpoint checked in or reported telemetry in ISO 8601 format."
+    "created_time": "String: Optional: Time when the device was first seen in ISO 8601 format.",
+    "last_seen_time": "String: Optional: Last time the device checked in or reported telemetry in ISO 8601 format."
   },
 
   "security": {
@@ -35,17 +40,18 @@
     "password_policy": "Boolean: Recommended: Indicates whether the endpoint complies with the organisation password policy."
   },
 
-  "status": "String: Optional: Current operational status of the endpoint e.g. Online, Offline, Retired.",
-  "status_id": "Integer: Optional: Normalized numeric status code for the endpoint.(0: Unknown, 1: Success, 2: Failure, 99: Other)",
-  "status_detail": "String: Optional: Additional context describing the current status or reason for non-compliance.",
+  "status": "String: Recommended: Current operational status of the endpoint e.g. Online, Offline, Retired.",
+  "status_id": "Integer: Recommended: Normalized status code. 0 = Unknown, 1 = Success, 2 = Failure, 99 = Other.",
+  "status_detail": "String: Recommended: Additional context describing the current status or reason for non-compliance.",
+  "status_code": "String: Recommended: Status code as reported by the event source.",
 
   "metadata": {
     "version": "String: Required: OCSF schema version e.g. 1.0.0.",
-    "uid": "String: Optional: Original record UID in the source system. If no relevant ID exists keep blank.",
-    "logged_time": "String: Optional: Time this record was collected in ISO 8601 format.",
-    "Source": {
-      "name": "String: Required: Name of the platform this data came from e.g. Github,Jamf, Intune, CrowdStrike. Write the name directly, not a variable.",
-      "device_managed": "Boolean: Optional: Indicates whether the endpoint is managed by corporate tooling (true = managed, false = unmanaged).",
+    "uid": "String: Optional: Unique identifier of this specific inventory record. If no relevant ID exists keep blank.",
+    "logged_time": "String: Optional: Time this record was logged in ISO 8601 format.",
+    "product": {
+      "name": "String: Required: Name of the platform this data came from e.g. Jamf, Intune, CrowdStrike. Write the name directly, not a variable.",
+      "vendor_name": "String: Optional: Name of the vendor that owns the platform."
     },
     "extensions": {
       "custom_attributes": {
