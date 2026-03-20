@@ -2,7 +2,7 @@
   "class_uid": 3002,
   "class_name": "Authentication",
   
-"category_uid": "Integer: Required: Numeric category UID as defined by OCSF.",
+  "category_uid": "Integer: Required: Numeric category UID as defined by OCSF.",
   "is_mfa": "Boolean: Required: True if MFA is enabled, False if disabled.",
   "user": {
     "name": "String: Required: Unique identifier or username of the account associated with the authentication event.",
